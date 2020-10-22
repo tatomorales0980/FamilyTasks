@@ -1,5 +1,7 @@
 package com.tato0980.familytasks
 
+import android.app.AlertDialog
+import android.app.ProgressDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -13,10 +15,15 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
     // Error https://stackoverflow.com/questions/47437678/why-do-i-get-com-google-android-gms-common-api-apiexception-10
+
+    lateinit var myemail : String
+    lateinit var mypass : String
 
     // XML Google SingIn variable ID
     lateinit var rvSigninGoogle : RelativeLayout
@@ -24,7 +31,12 @@ class MainActivity : AppCompatActivity() {
     // WHY = 1000?
     val RC_SIGN_IN = 1000
 
-    // Sing In variable client
+    private lateinit var progressDialog: ProgressDialog
+
+    var db = FirebaseFirestore.getInstance()
+    lateinit var detailmsg : String
+
+    // SingIn variable client
     var googleSignInClient : GoogleSignInClient? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,6 +65,35 @@ class MainActivity : AppCompatActivity() {
             var signInIntent = googleSignInClient?.signInIntent
             startActivityForResult(signInIntent,RC_SIGN_IN)
         }
+
+        btnSingUp.setOnClickListener {
+            // Creating a new user
+            if (etEmail.text.isNotEmpty() && etPassword.text.isNotEmpty()){
+                checkField()
+            }
+
+        }
+    }
+
+    private fun checkField() {
+        // Take email and password data
+        myemail = etEmail.text.toString()
+        mypass = etPassword.text.toString()
+
+        //Firebase create a NEW USER with Email and Password
+        FirebaseAuth.getInstance().createUserWithEmailAndPassword(myemail, mypass).addOnCompleteListener {
+
+            if (it.isSuccessful){
+                progressDialog = ProgressDialog(this@MainActivity)
+                progressDialog.setMessage("Saving Data on Server")
+                progressDialog.setCancelable(false)
+                progressDialog.show()
+                insertDatainFirebase()
+            } else {
+                detailmsg = " User with this Email Address already exist"
+                showAlert()
+            }
+        }
     }
 
     override fun onResume() {
@@ -71,29 +112,76 @@ class MainActivity : AppCompatActivity() {
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
             // Decrypt data from variable account
             val account = task.getResult(ApiException::class.java)
-            Toast.makeText(this, "$account", Toast.LENGTH_SHORT).show()
             firebaseAuthWithGoogle(account)
         }
     }
 
     fun firebaseAuthWithGoogle(acct : GoogleSignInAccount?){
+
+//        progressDialog = ProgressDialog(this@MainActivity)
+//        progressDialog.setMessage("Saving Data on Server")
+//        progressDialog.setCancelable(false)
+//        progressDialog.show()
+
         var credential = GoogleAuthProvider.getCredential(acct?.idToken,null)
         FirebaseAuth.getInstance().signInWithCredential(credential).addOnCompleteListener {
                 task ->
             if(task.isSuccessful){
-                moveNextPage()
+                insertDatainFirebase()
+            } else {
+                Toast.makeText(this, "Something went wrong", Toast.LENGTH_SHORT).show()
+//                progressDialog.dismiss()
             }
         }
+            .addOnFailureListener {
+                Toast.makeText(this, "Something went wrong", Toast.LENGTH_SHORT).show()
+                progressDialog.dismiss()
+            }
+    }
+
+    private fun insertDatainFirebase() {
+        progressDialog = ProgressDialog(this@MainActivity)
+        progressDialog.setMessage("Saving Data on Server")
+        progressDialog.setCancelable(false)
+        progressDialog.show()
+
+        var data = HashMap<String,String> ()
+        data.put("email",FirebaseAuth.getInstance().currentUser!!.email.toString())
+//        val myCurrentEmail = FirebaseAuth.getInstance().currentUser!!.email.toString()
+//        Toast.makeText(this, "El email es $myCurrentEmail", Toast.LENGTH_SHORT).show()
+
+        db.collection("Users")
+            .document(FirebaseAuth.getInstance().currentUser!!.uid.toString())
+            .set(data)
+            .addOnSuccessListener {
+                progressDialog.dismiss()
+                Toast.makeText(this, "Successfully Loggedin", Toast.LENGTH_SHORT).show()
+                progressDialog.dismiss()
+                moveNextPage()
+            }
+            .addOnFailureListener {
+                Toast.makeText(this, "Something went wrong", Toast.LENGTH_SHORT).show()
+                progressDialog.dismiss()
+            }
     }
 
     fun moveNextPage(){
+
         var currentUser = FirebaseAuth.getInstance().currentUser
 
         if(currentUser != null){
-            startActivity(Intent(this,HomeScreen::class.java))
+//            startActivity(Intent(this,HomeScreen::class.java))
+            startActivity(Intent(this,register::class.java))
         }
     }
 
-
+    private fun showAlert(){
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Error")
+        builder.setMessage(detailmsg)
+        builder.setPositiveButton("OK", null)
+        val dialog: AlertDialog = builder.create()
+        dialog.show()
+    }
 }
 

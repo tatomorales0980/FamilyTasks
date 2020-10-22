@@ -1,18 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".HomeScreen">
-
+    tools:context=".register">
 
     <LinearLayout
         android:id="@+id/lltop"
         android:layout_width="match_parent"
         android:layout_height="130dp"
         android:layout_gravity="center"
-        android:background="@color/blueBackground"
         android:orientation="vertical">
 
         <TextView
@@ -23,41 +21,41 @@
             android:textSize="12sp"
             android:paddingTop="10dp"
             android:paddingRight="8dp"
-            android:layout_gravity="end"
-            android:textColor="@color/colorWhite">
+            android:layout_gravity="end">
 
         </TextView>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/montserrat"
-            android:paddingLeft="8dp"
-            android:paddingTop="60dp"
-            android:text="USER PROFILE"
-            android:layout_gravity="bottom"
-            android:textColor="@color/colorWhite"
-            android:textSize="18sp"></TextView>
+
 
     </LinearLayout>
 
     <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/lottieAnimationView"
-            android:background="@color/blueBackground"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="50dp"
-            app:lottie_autoPlay="true"
-            app:lottie_fileName="user_outline.json"
-            app:lottie_loop="false" />
-
+        android:id="@+id/lottieAnimationView"
+        android:layout_width="230dp"
+        android:layout_height="180dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        app:lottie_autoPlay="true"
+        app:lottie_fileName="working_together.json"
+        app:lottie_loop="false" />
+    <TextView
+        android:id="@+id/tvRegistration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/montserrat"
+        android:paddingLeft="8dp"
+        android:text="Registration"
+        android:layout_centerInParent="true"
+        android:textColor="@color/blueBackground"
+        android:layout_below="@+id/lottieAnimationView"
+        android:textSize="18sp">
+    </TextView>
 
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/lltop">
+        android:layout_below="@id/tvRegistration">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -71,6 +69,28 @@
                 android:padding="10dp"
                 android:text="Email"
                 android:textColor="@color/blueBackground" />
+
+            <EditText
+                android:id="@+id/etUserEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter your Email"
+                android:inputType="textEmailAddress" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="20sp" />
+
+            <EditText
+                android:id="@+id/etUserPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter your Password"
+                android:inputType="textPassword" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="20sp" />
             <EditText
                 android:id="@+id/etUserName"
                 android:layout_width="match_parent"
@@ -85,7 +105,8 @@
                 android:id="@+id/etPhoneNumber"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Enter your Phone Number"/>
+                android:hint="Enter your Phone Number"
+                android:inputType="phone" />
 
             <Space
                 android:layout_width="match_parent"
@@ -97,17 +118,17 @@
                 android:layout_height="wrap_content"
                 android:hint="Create your Group Name"/>
 
+
             <Button
-                android:id="@+id/btnLogout"
+                android:id="@+id/btnSave"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="LogOut">
+                android:text="Save">
 
             </Button>
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
-
 
 
 

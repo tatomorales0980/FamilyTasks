@@ -4,18 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
     tools:context=".MainActivity">
 
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="centerCrop"
-        android:src="@drawable/produce4_1"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp">
-    </ImageView>
+<!--    <ImageView-->
+<!--        android:id="@+id/imageView2"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:scaleType="centerCrop"-->
+<!--        android:src="@drawable/produce4_1"-->
+<!--        tools:layout_editor_absoluteX="0dp"-->
+<!--        tools:layout_editor_absoluteY="0dp">-->
+<!--    </ImageView>-->
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -31,19 +30,20 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/montserrat"
                 android:gravity="center"
-                android:paddingTop="40dp"
-                android:text="My Family Task App"
-                android:textColor="@color/colorWhite"
+                android:paddingTop="20dp"
+                android:text="My TODO's"
+                android:textColor="@color/colorPurple"
+                android:textStyle="bold"
                 android:textSize="24sp">
             </TextView>
             <com.airbnb.lottie.LottieAnimationView
                 android:id="@+id/lottieAnimationView"
-                android:layout_width="180dp"
-                android:layout_height="180dp"
+                android:layout_width="270dp"
+                android:layout_height="270dp"
                 android:layout_marginTop="24dp"
                 android:layout_gravity="center_horizontal"
                 app:lottie_autoPlay="true"
-                app:lottie_fileName="bluecheckmark.json"
+                app:lottie_fileName="working_together.json"
                 app:lottie_loop="true" />
 
             <EditText
@@ -54,10 +54,12 @@
                 android:layout_marginTop="24dp"
                 android:layout_marginEnd="32dp"
                 android:background="@drawable/round_border"
+                android:backgroundTint="@color/colorPurpleBackground"
                 android:drawableStart="@drawable/email"
                 android:drawablePadding="20dp"
                 android:ems="10"
                 android:hint="Email"
+                android:textColorHint="@color/colorHint"
                 android:inputType="textWebEmailAddress"
                 android:paddingLeft="15dip"
                 android:textColorLink="#FFFFFF" />
@@ -70,10 +72,12 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="32dp"
                 android:background="@drawable/round_border"
+                android:backgroundTint="@color/colorPurpleBackground"
                 android:drawableStart="@drawable/lock"
                 android:drawablePadding="10dp"
                 android:ems="10"
-                android:hint="Password"
+                android:hint="Password - 8 Characters"
+                android:textColorHint="@color/colorHint"
                 android:inputType="textPassword"
                 android:paddingLeft="15dip" />
 
@@ -82,6 +86,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginStart="32dp"
+                android:visibility="gone"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="32dp"
                 android:background="@drawable/round_border"
@@ -94,15 +99,15 @@
                 android:textColorLink="#FFFFFF" />
 
             <Button
-                android:id="@+id/button2"
+                android:id="@+id/btnSingUp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="44dp"
                 android:layout_marginEnd="32dp"
-                android:background="@drawable/todo_button"
+                android:background="@color/colorPurpleButton"
                 android:fontFamily="@font/montserrat"
-                android:text="Secure login"
+                android:text="Secure Signup"
                 android:textColor="@color/colorWhite"
                 android:textSize="16sp" />
 
@@ -110,9 +115,9 @@
                 android:id="@+id/textView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 android:text="Or"
-                android:textColor="@color/colorWhite"
+                android:textColor="@color/colorPurpleButton"
                 android:textSize="16sp"
                 android:layout_gravity="center_horizontal"/>
 
@@ -120,8 +125,8 @@
                 android:id="@+id/rvSigninGoogle"
                 android:layout_width="match_parent"
                 android:layout_marginStart="32dp"
-                android:background="@drawable/todo_button"
-                android:layout_marginTop="16dp"
+                android:background="@color/colorPurpleButton"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="32dp"
                 android:layout_height="50dp">
 
@@ -149,6 +154,30 @@
                         android:textColor="@color/colorWhite"  />
                 </RelativeLayout>
             </RelativeLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:paddingLeft="32dp"
+                    android:textSize="12sp"
+                    android:text="New User? ">
+                </TextView>
+                <TextView
+                    android:id="@+id/tvRegister"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorPurpleButton"
+                    android:textSize="12sp"
+                    android:text="Register Here">
+
+                </TextView>
+            </LinearLayout>
+
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
