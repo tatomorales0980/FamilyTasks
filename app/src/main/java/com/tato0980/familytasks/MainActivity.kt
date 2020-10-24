@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.RelativeLayout
+import android.widget.TextView
 import android.widget.Toast
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -24,6 +25,7 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var myemail : String
     lateinit var mypass : String
+    lateinit var tvregister : TextView
 
     // XML Google SingIn variable ID
     lateinit var rvSigninGoogle : RelativeLayout
@@ -44,6 +46,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         rvSigninGoogle = findViewById<RelativeLayout>(R.id.rvSigninGoogle)
+        tvregister = findViewById(R.id.tvRegister)
+
 
         // gso Variable containe the configuration
         // Google SingIn Builder Authentication
@@ -73,24 +77,34 @@ class MainActivity : AppCompatActivity() {
             }
 
         }
+
+        // Register button action
+        tvregister.setOnClickListener {
+            intent = Intent(this, register::class.java)
+            startActivity(intent)
+        }
     }
 
-    private fun checkField() {
+    fun checkField() {
         // Take email and password data
         myemail = etEmail.text.toString()
         mypass = etPassword.text.toString()
 
+
         //Firebase create a NEW USER with Email and Password
-        FirebaseAuth.getInstance().createUserWithEmailAndPassword(myemail, mypass).addOnCompleteListener {
+//        FirebaseAuth.getInstance().createUserWithEmailAndPassword(myemail, mypass).addOnCompleteListener {
+        // if the user is already created (singIn code)
+        FirebaseAuth.getInstance().signInWithEmailAndPassword(myemail, mypass).addOnCompleteListener {
 
             if (it.isSuccessful){
                 progressDialog = ProgressDialog(this@MainActivity)
                 progressDialog.setMessage("Saving Data on Server")
                 progressDialog.setCancelable(false)
                 progressDialog.show()
-                insertDatainFirebase()
+//                I dont need this line here, needs to register
+//                insertDatainFirebase()
             } else {
-                detailmsg = " User with this Email Address already exist"
+                detailmsg = " User with this Email Address Doesn't exist, please Register"
                 showAlert()
             }
         }
@@ -108,7 +122,7 @@ class MainActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if(requestCode == RC_SIGN_IN){
-            // Get the Sinin data
+            // Get the Singin data
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
             // Decrypt data from variable account
             val account = task.getResult(ApiException::class.java)
@@ -117,11 +131,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun firebaseAuthWithGoogle(acct : GoogleSignInAccount?){
-
-//        progressDialog = ProgressDialog(this@MainActivity)
-//        progressDialog.setMessage("Saving Data on Server")
-//        progressDialog.setCancelable(false)
-//        progressDialog.show()
 
         var credential = GoogleAuthProvider.getCredential(acct?.idToken,null)
         FirebaseAuth.getInstance().signInWithCredential(credential).addOnCompleteListener {
@@ -170,8 +179,8 @@ class MainActivity : AppCompatActivity() {
         var currentUser = FirebaseAuth.getInstance().currentUser
 
         if(currentUser != null){
-//            startActivity(Intent(this,HomeScreen::class.java))
-            startActivity(Intent(this,register::class.java))
+            startActivity(Intent(this,HomeScreen::class.java))
+//            startActivity(Intent(this,register::class.java))
         }
     }
 

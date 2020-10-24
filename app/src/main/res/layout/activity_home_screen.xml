@@ -72,7 +72,6 @@
                 android:text="Email"
                 android:textColor="@color/blueBackground" />
             <EditText
-                android:id="@+id/etUserName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Enter your Name"/>
@@ -82,7 +81,6 @@
                 android:layout_height="20sp" />
 
             <EditText
-                android:id="@+id/etPhoneNumber"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Enter your Phone Number"/>
@@ -92,7 +90,6 @@
                 android:layout_height="20sp" />
 
             <EditText
-                android:id="@+id/etGroupName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Create your Group Name"/>
