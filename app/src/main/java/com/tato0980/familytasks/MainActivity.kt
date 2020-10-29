@@ -104,7 +104,7 @@ class MainActivity : AppCompatActivity() {
 //                I dont need this line here, needs to register
 //                insertDatainFirebase()
             } else {
-                detailmsg = " User with this Email Address Doesn't exist, please Register"
+                detailmsg = "The Email is not Registered"
                 showAlert()
             }
         }
@@ -136,7 +136,8 @@ class MainActivity : AppCompatActivity() {
         FirebaseAuth.getInstance().signInWithCredential(credential).addOnCompleteListener {
                 task ->
             if(task.isSuccessful){
-                insertDatainFirebase()
+//                insertDatainFirebase()
+                moveNextPage()
             } else {
                 Toast.makeText(this, "Something went wrong", Toast.LENGTH_SHORT).show()
 //                progressDialog.dismiss()
@@ -149,6 +150,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun insertDatainFirebase() {
+
         progressDialog = ProgressDialog(this@MainActivity)
         progressDialog.setMessage("Saving Data on Server")
         progressDialog.setCancelable(false)
@@ -156,8 +158,7 @@ class MainActivity : AppCompatActivity() {
 
         var data = HashMap<String,String> ()
         data.put("email",FirebaseAuth.getInstance().currentUser!!.email.toString())
-//        val myCurrentEmail = FirebaseAuth.getInstance().currentUser!!.email.toString()
-//        Toast.makeText(this, "El email es $myCurrentEmail", Toast.LENGTH_SHORT).show()
+//        data.put("email",email)
 
         db.collection("Users")
             .document(FirebaseAuth.getInstance().currentUser!!.uid.toString())
@@ -177,10 +178,22 @@ class MainActivity : AppCompatActivity() {
     fun moveNextPage(){
 
         var currentUser = FirebaseAuth.getInstance().currentUser
-
         if(currentUser != null){
-            startActivity(Intent(this,HomeScreen::class.java))
-//            startActivity(Intent(this,register::class.java))
+//          My code 11/28
+            var email = FirebaseAuth.getInstance().currentUser!!.email.toString()
+
+            db.collection("Users").document(email).get().addOnSuccessListener {
+                var name = it.get("name") as String?
+                var phone = it.get("phone") as String?
+                var group = it.get("group") as String?
+                Toast.makeText(this, "mi Nombre es : $name", Toast.LENGTH_SHORT).show()
+                if (name != null || phone != null || group != null){
+                    startActivity(Intent(this,HomeScreen::class.java))
+                } else {
+                    startActivity(Intent(this,register::class.java))
+                }
+            }
+//          *****************************
         }
     }
 
