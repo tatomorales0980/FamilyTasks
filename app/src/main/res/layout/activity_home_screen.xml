@@ -10,9 +10,9 @@
     <LinearLayout
         android:id="@+id/lltop"
         android:layout_width="match_parent"
-        android:layout_height="130dp"
+        android:layout_height="90dp"
         android:layout_gravity="center"
-        android:background="@color/blueBackground"
+        android:background="@color/colorPurpleButton"
         android:orientation="vertical">
 
         <TextView
@@ -25,7 +25,6 @@
             android:paddingRight="8dp"
             android:layout_gravity="end"
             android:textColor="@color/colorWhite">
-
         </TextView>
 
         <TextView
@@ -33,26 +32,49 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/montserrat"
             android:paddingLeft="8dp"
-            android:paddingTop="60dp"
-            android:text="USER PROFILE"
+            android:paddingTop="0dp"
+            android:text="MY TODO LIST"
             android:layout_gravity="bottom"
             android:textColor="@color/colorWhite"
-            android:textSize="18sp"></TextView>
+            android:textSize="18sp">
+        </TextView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="8dp"
+                android:paddingBottom="8dp"
+                android:paddingRight="8dp"
+                android:text="Group"
+                android:textColor="@color/colorWhite">
+            </TextView>
+
+            <Spinner
+                android:id="@+id/spGroup"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:autofillHints="Group"
+                android:background="@color/colorPurple"
+                android:padding="14dp"
+                android:paddingLeft="8dp">
+
+            </Spinner>
+            <TextView
+                android:id="@+id/tvGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="8dp"
+                android:paddingBottom="8dp"
+                android:paddingRight="8dp"
+                android:text="Group"
+                android:textColor="@color/colorWhite">
+            </TextView>
+        </LinearLayout>
 
     </LinearLayout>
-
-    <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/lottieAnimationView"
-            android:background="@color/blueBackground"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="50dp"
-            app:lottie_autoPlay="true"
-            app:lottie_fileName="user_outline.json"
-            app:lottie_loop="false" />
-
-
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -62,7 +84,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="16dp"
+            android:padding="8dp"
             android:orientation="vertical">
             <TextView
                 android:id="@+id/tvEmail"
@@ -71,28 +93,10 @@
                 android:padding="10dp"
                 android:text="Email"
                 android:textColor="@color/blueBackground" />
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Enter your Name"/>
 
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="20sp" />
 
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Enter your Phone Number"/>
 
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="20sp" />
 
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Create your Group Name"/>
 
             <Button
                 android:id="@+id/btnLogout"
@@ -102,10 +106,35 @@
 
             </Button>
 
+
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="28dp"
+        android:gravity="bottom|right"
+        android:orientation="horizontal">
 
+        <com.bitvale.lavafab.LavaFab
+            android:id="@+id/lava_fab_bottom_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/margin_normal"
+            android:layout_marginBottom="@dimen/margin_normal"
+            app:lavaChild="top|left|leftTop"
+            app:lavaLeftIcon="@drawable/ic_person"
+            app:lavaLeftTopIcon="@drawable/ic_groups"
+            app:lavaParentIcon="@drawable/ic_parent"
+            app:lavaParentSize="@dimen/fab_size"
+            app:lavaTopIcon="@drawable/ic_addshoppingcart"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+
+    </LinearLayout>
 
 
 </RelativeLayout>

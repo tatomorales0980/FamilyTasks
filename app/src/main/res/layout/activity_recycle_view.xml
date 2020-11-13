@@ -1,0 +1,85 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorPurpleButton"
+    tools:context=".MainActivity">
+
+    <ImageView
+        android:id="@+id/imageViewBack"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:paddingTop="20dp"
+        android:paddingLeft="8dp"
+        android:src="@drawable/ic_arrowback"
+        app:tint="@color/white" />
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@color/colorPurpleButton"
+        android:fontFamily="@font/montserrat"
+        android:text="ITEM LIST"
+        android:textAlignment="center"
+        android:textColor="@color/colorPurpleText"
+        android:textSize="34dp"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:id="@+id/llSearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:paddingRight="8dp"
+        android:layout_below="@+id/tvTitle"
+        android:background="@color/colorPurpleBackground">
+
+        <EditText
+            android:id="@+id/etSearch"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_search"
+            android:hint="Search">
+
+        </EditText>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/llSearch"
+        android:background="@color/colorWhite">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/listItems"
+            android:layout_below="@+id/tvTitle"
+            android:layout_margin="10dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabAddItem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="32dp"
+        android:clickable="true"
+        android:src="@drawable/ic_parent"
+        app:backgroundTint="@color/fab_color"
+        app:borderWidth="1dp"
+        app:elevation="6dp" />
+
+
+</RelativeLayout>

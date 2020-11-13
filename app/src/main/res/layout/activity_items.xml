@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPurpleButton"
+    tools:context=".Items">
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/lottieAnimationView"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="0dp"
+        app:lottie_autoPlay="true"
+        app:lottie_fileName="purple_background.json"
+        app:lottie_loop="true" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/relativeLTop">
+
+
+
+
+        <ImageView
+            android:id="@+id/imageViewBack"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:paddingTop="20dp"
+            android:paddingLeft="8dp"
+            android:src="@drawable/ic_arrowback"
+            app:tint="@color/white" />
+
+        <TextView
+            android:id="@+id/mainTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat"
+            android:paddingLeft="16dp"
+            android:text="your item"
+            android:textColor="@color/colorWhite"
+            android:textSize="40sp"
+            android:textStyle="bold"></TextView>
+
+
+    </LinearLayout>
+
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/relativeLTop"
+        android:layout_marginTop="-1dp"
+        android:paddingLeft="16dp"
+        android:paddingTop="40dp"
+        android:paddingRight="16dp">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView"
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            android:layout_gravity="center_horizontal"
+            android:background="@color/colorWhite"
+            android:elevation="10dp"
+            android:padding="10dp"
+            app:cardCornerRadius="0dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <ImageView
+                    android:id="@+id/imageItem"
+                    android:layout_width="match_parent"
+                    android:layout_height="220dp"
+                    android:layout_gravity="center"
+                    android:cropToPadding="true"
+                    android:paddingLeft="0dp"
+                    android:paddingTop="0dp"
+                    android:paddingRight="0dp"
+                    android:scaleType="centerCrop"
+                    app:srcCompat="@drawable/orange_fruit" />
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="70sp" />
+
+                <EditText
+                    android:id="@+id/etItemName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Item Name" />
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="10sp" />
+
+                <EditText
+                    android:id="@+id/etItemDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Item Description" />
+
+
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp"
+                    android:weightSum="4"
+                    android:orientation="horizontal"
+                    android:padding="8dp">
+
+                    <ImageButton
+                        android:id="@+id/cameraButton"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_weight="0.5"
+                        android:background="@color/colorPurpleButton"
+                        android:padding="11dp"
+                        android:tint="@color/colorWhite"
+                       android:src="@drawable/ic_camera" />
+
+
+                    <ImageButton
+                        android:id="@+id/galleryButton"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_weight="0.5"
+                        android:background="@color/colorPurpleButton"
+                        android:padding="11dp"
+                        android:tint="@color/colorWhite"
+                        android:src="@drawable/ic_imagesearch" />
+
+                    <Button
+                        android:id="@+id/btnSaveItem"
+                        android:layout_width="100dp"
+                        android:layout_weight="3"
+                        android:layout_height="60dp"
+                        android:background="@color/colorPurpleButton"
+                        android:text="Save"
+                        android:textColor="@color/white"
+                        android:textSize="20sp" />
+
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/btnDelete"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@color/colorPurpleButton"
+                    android:textColor="@color/white"
+                    android:textSize="20dp"
+                    android:text="Delete">
+                </Button>
+
+                </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+    </androidx.core.widget.NestedScrollView>
+
+</RelativeLayout>

@@ -85,6 +85,11 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        moveNextPage()
+    }
+
     fun checkField() {
         // Take email and password data
         myemail = etEmail.text.toString()
@@ -97,11 +102,12 @@ class MainActivity : AppCompatActivity() {
         FirebaseAuth.getInstance().signInWithEmailAndPassword(myemail, mypass).addOnCompleteListener {
 
             if (it.isSuccessful){
-                progressDialog = ProgressDialog(this@MainActivity)
-                progressDialog.setMessage("Saving Data on Server")
-                progressDialog.setCancelable(false)
-                progressDialog.show()
+                startActivity(Intent(this,HomeScreen::class.java))
 //                I dont need this line here, needs to register
+//                progressDialog = ProgressDialog(this@MainActivity)
+//                progressDialog.setMessage("Saving Data on Server")
+//                progressDialog.setCancelable(false)
+//                progressDialog.show()
 //                insertDatainFirebase()
             } else {
                 detailmsg = "The Email is not Registered"
@@ -110,10 +116,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        moveNextPage()
-    }
+
 
     // Override function
     // OnActivityResult 3 parameters
@@ -178,19 +181,24 @@ class MainActivity : AppCompatActivity() {
     fun moveNextPage(){
 
         var currentUser = FirebaseAuth.getInstance().currentUser
+
         if(currentUser != null){
-//          My code 11/28
-            var email = FirebaseAuth.getInstance().currentUser!!.email.toString()
+//          My code 10/28
+//            var email = FirebaseAuth.getInstance().currentUser!!.email.toString()
+//            Don't verify it is coming from GOOGLE login
+            var email = FirebaseAuth.getInstance().currentUser!!.uid.toString()
+
 
             db.collection("Users").document(email).get().addOnSuccessListener {
                 var name = it.get("name") as String?
                 var phone = it.get("phone") as String?
                 var group = it.get("group") as String?
-                Toast.makeText(this, "mi Nombre es : $name", Toast.LENGTH_SHORT).show()
                 if (name != null || phone != null || group != null){
-                    startActivity(Intent(this,HomeScreen::class.java))
+                    startActivity(Intent(this,RecycleView_todo::class.java))
                 } else {
-                    startActivity(Intent(this,register::class.java))
+                    startActivity(Intent(this,register::class.java).apply {
+                        putExtra("display_editText","no")
+                    })
                 }
             }
 //          *****************************

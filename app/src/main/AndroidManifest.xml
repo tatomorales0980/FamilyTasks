@@ -3,6 +3,8 @@
     package="com.tato0980.familytasks">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:allowBackup="true"
@@ -11,7 +13,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".register"></activity>
+        <activity android:name=".CustomRecycleTodo"></activity>
+        <activity android:name=".RecycleView_todo" />
+        <activity android:name=".CustomRecycleItems" />
+        <activity android:name=".CustomRecycleContacts" />
+        <activity android:name=".RecycleView" />
+        <activity android:name=".Items" />
+        <activity android:name=".GoogleRegister" />
+        <activity
+            android:name=".register"
+            android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity android:name=".HomeScreen" />
         <activity android:name=".LottieAnim" />
         <activity android:name=".MainActivity">

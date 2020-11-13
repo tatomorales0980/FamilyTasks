@@ -1,0 +1,94 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorPurpleButton"
+    tools:context=".MainActivity">
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/lottieAnimationView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="0dp"
+        app:lottie_autoPlay="true"
+        app:lottie_fileName="purple_background.json"
+        app:lottie_loop="true" />
+
+    <ImageView
+        android:id="@+id/imageViewBack"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:paddingTop="20dp"
+        android:paddingLeft="8dp"
+        android:src="@drawable/ic_arrowback"
+        app:tint="@color/white" />
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@color/colorPurpleButton"
+        android:fontFamily="@font/montserrat"
+        android:text="MY TO DO LIST"
+        android:letterSpacing="0.1"
+        android:textAlignment="center"
+        android:textColor="@color/colorPurpleText"
+        android:textSize="34dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvLogout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:paddingTop="10dp"
+        android:paddingRight="8dp"
+        android:text="LOGOUT"
+        android:textColor="@color/colorWhite"
+        android:textSize="12sp"></TextView>
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvTitle"
+        android:background="@color/colorPurpleButton">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/listItems"
+            android:layout_below="@+id/tvTitle"
+            android:layout_margin="10dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <com.bitvale.lavafab.LavaFab
+        android:id="@+id/lava_fab_bottom_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="@dimen/margin_normal"
+        android:layout_marginBottom="@dimen/margin_normal"
+        app:lavaChild="top|left|leftTop"
+        app:lavaLeftIcon="@drawable/ic_person"
+        app:lavaLeftTopIcon="@drawable/ic_groups"
+        app:lavaParentIcon="@drawable/ic_parent"
+        app:lavaParentSize="@dimen/fab_size"
+        app:lavaTopIcon="@drawable/ic_addshoppingcart"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+
+
+</RelativeLayout>

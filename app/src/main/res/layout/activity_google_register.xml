@@ -24,7 +24,6 @@
             android:textSize="12sp"
             android:paddingTop="10dp"
             android:paddingRight="8dp"
-            android:textColor="@color/colorWhite"
             android:layout_gravity="end">
 
         </TextView>
@@ -80,28 +79,6 @@
                 android:layout_height="wrap_content"
                 android:hint="Enter your Email"
                 android:inputType="textEmailAddress" />
-
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="20sp" />
-
-            <EditText
-                android:id="@+id/etUserPassword"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Type Password"
-                android:inputType="textPassword" />
-
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="20sp" />
-
-            <EditText
-                android:id="@+id/etUserRePassword"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Retype Password"
-                android:inputType="textPassword" />
 
             <Space
                 android:layout_width="match_parent"

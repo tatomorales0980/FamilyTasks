@@ -7,6 +7,11 @@
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorPurple">#673AB7</color>
     <color name="colorPurpleButton">#441F85</color>
+    <color name="colorPurpleText">#6C33D1</color>
     <color name="colorPurpleBackground">#C8B2EF</color>
+    <color name="colorPurpleComplement1">#F2EE9D</color>
+    <color name="colorPurpleComplement2">#A8A32C</color>
     <color name="blueBackground">#263238</color>
+    <color name="fab_color">#FF00FF</color>
+
 </resources>

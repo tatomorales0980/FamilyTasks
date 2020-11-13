@@ -6,6 +6,10 @@ apply plugin: 'com.google.gms.google-services'
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.1"
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 
     defaultConfig {
         applicationId "com.tato0980.familytasks"
@@ -33,9 +37,14 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.1'
     implementation 'androidx.cardview:cardview:1.0.0'
+    implementation 'com.google.android.material:material:1.2.1'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    implementation "androidx.recyclerview:recyclerview:1.1.0"
+    implementation "androidx.recyclerview:recyclerview:1.2.0-alpha06"
+    // For control over item selection of both touch and mouse driven selection
+    implementation "androidx.recyclerview:recyclerview-selection:1.1.0-rc03"
 
     implementation 'com.google.firebase:firebase-core:17.2.0'
     implementation 'com.google.firebase:firebase-database:19.0.0'
@@ -47,11 +56,30 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics:17.2.0'
     implementation 'com.google.firebase:firebase-config:17.0.0'
 
+
     //Google Signin
     implementation 'com.google.android.gms:play-services-auth:16.0.1'
 
     //Lottiee animation
     implementation 'com.airbnb.android:lottie:3.0.7'
     implementation 'com.android.support:multidex:1.0.3'
+
+    //Permission
+    implementation 'com.github.florent37:runtime-permission-kotlin:1.1.2'
+
+    // FAB Menu
+    implementation 'com.bitvale:lavafab:1.0.1'
+
+    //Button animation
+    compile 'me.spark:submitbutton:1.0.1'
+
+    //Groupie For Recyclerview
+    implementation "com.xwray:groupie:2.8.1"
+
+    //Picasso image
+    implementation 'com.squareup.picasso:picasso:2.71828'
+
+    //DragDropSwipeRecyclerview
+    implementation 'com.ernestoyaquello.dragdropswiperecyclerview:drag-drop-swipe-recyclerview:0.6.0'
 
 }

@@ -3,18 +3,19 @@ package com.tato0980.familytasks
 import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.view.WindowManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.cardview.widget.CardView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.android.synthetic.main.activity_home_screen.*
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_register.*
+
 
 class register : AppCompatActivity() {
 
@@ -28,6 +29,8 @@ class register : AppCompatActivity() {
     lateinit var newgroup : EditText
     lateinit var errormsg : String
 
+
+
     lateinit var btnlogout : TextView
     lateinit var btnsave : Button
     private lateinit var progressDialog: ProgressDialog
@@ -35,14 +38,22 @@ class register : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
+        
+//      adjust layout when soft keyboard appears
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE or WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
 
-        var logedemail = FirebaseAuth.getInstance().currentUser!!.email.toString()
-        etUserEmail.isEnabled  = false
-        etUserEmail.setText(logedemail)
-        etUserPassword.setVisibility(View.GONE)
-        etUserRePassword.setVisibility(View.GONE)
 
-        btnlogout = findViewById(R.id.tvLogout)
+        var show = intent.getStringExtra("display_editText")
+
+        if (show == "no"){
+            var logedemail = FirebaseAuth.getInstance().currentUser!!.email.toString()
+            etUserEmail.isEnabled  = false
+            etUserEmail.setText(logedemail)
+            etUserPassword.setVisibility(View.GONE)
+            etUserRePassword.setVisibility(View.GONE)
+        }
+
+        btnlogout = findViewById(R.id.tvRLogout)
         btnsave = findViewById(R.id.btnSave)
 
         newemail = findViewById(R.id.etUserEmail)
@@ -52,24 +63,42 @@ class register : AppCompatActivity() {
         newphone = findViewById(R.id.etPhoneNumber)
         newgroup = findViewById(R.id.etGroupName)
 
+        btnlogout.setOnClickListener {
+            FirebaseAuth.getInstance().signOut()
+            var currentUser = FirebaseAuth.getInstance().currentUser
 
+            if(currentUser == null){
+                startActivity(Intent(this, MainActivity::class.java))
+            }
+        }
         btnsave.setOnClickListener {
-
-            if (newpass.text.toString() == newrepass.text.toString()) {
-                if (newemail.text.toString().isNotEmpty() && newpass.text.toString().isNotEmpty() && newname.text.toString().isNotEmpty() && newphone.text.toString().isNotEmpty() && newgroup.text.toString().isNotEmpty()) {
-                    checkField()
+            if (show != "no"){
+                if (newpass.text.toString() == newrepass.text.toString()) {
+                    if (newemail.text.toString().isNotEmpty() && newpass.text.toString()
+                            .isNotEmpty() && newname.text.toString()
+                            .isNotEmpty() && newphone.text.toString()
+                            .isNotEmpty() && newgroup.text.toString().isNotEmpty()
+                    ) {
+                        checkField()
+                    } else {
+                        errormsg = "Password doesn't match"
+                        showAlert()
+                    }
                 }
             } else {
-                errormsg = "Password doesn't match"
-                showAlert()
+                insertDatainFirebase()
             }
+
         }
     }
 
     fun checkField() {
 //        Firebase create a NEW USER with Email and Password
-        FirebaseAuth.getInstance().createUserWithEmailAndPassword(newemail.text.toString(), newpass.text.toString()).addOnCompleteListener {
-
+//        revisar esta linea para que cree el usuario adelante
+        FirebaseAuth.getInstance().createUserWithEmailAndPassword(
+            newemail.text.toString(),
+            newpass.text.toString()
+        ).addOnCompleteListener {
 
             if (it.isSuccessful){
                 progressDialog = ProgressDialog(this@register)
@@ -90,9 +119,9 @@ class register : AppCompatActivity() {
         progressDialog.setCancelable(false)
         progressDialog.show()
 
-        var data = HashMap<String,String> ()
-        data.put("email",FirebaseAuth.getInstance().currentUser!!.email.toString())
-        data.put("name",newname.text.toString())
+        var data = HashMap<String, String> ()
+        data.put("email", FirebaseAuth.getInstance().currentUser!!.email.toString())
+        data.put("name", newname.text.toString())
         data.put("phone", newphone.text.toString())
         data.put("group", newgroup.text.toString())
 
@@ -118,7 +147,7 @@ class register : AppCompatActivity() {
         var currentUser = FirebaseAuth.getInstance().currentUser
 
         if(currentUser != null){
-            startActivity(Intent(this,HomeScreen::class.java))
+            startActivity(Intent(this, RecycleView_todo::class.java))
         }
     }
 
