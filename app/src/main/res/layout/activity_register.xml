@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPurpleBackground"
     tools:context=".register">
 
 
@@ -11,7 +12,7 @@
     <LinearLayout
         android:id="@+id/lltop"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="100dp"
         android:layout_gravity="center"
         android:orientation="vertical"
         android:background="@color/colorPurpleButton">
@@ -26,19 +27,24 @@
             android:paddingRight="8dp"
             android:textColor="@color/colorWhite"
             android:layout_gravity="end">
-
         </TextView>
-
-
-
     </LinearLayout>
+
+    <ImageView
+        android:id="@+id/ivBackRegister"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:paddingTop="20dp"
+        android:paddingLeft="8dp"
+        android:src="@drawable/ic_arrowback"
+        app:tint="@color/white" />
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/lottieAnimationView"
         android:layout_width="230dp"
         android:layout_height="180dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="30dp"
         app:lottie_autoPlay="true"
         app:lottie_fileName="working_together.json"
         app:lottie_loop="false" />
@@ -55,98 +61,105 @@
         android:textSize="18sp">
     </TextView>
 
-
-    <androidx.core.widget.NestedScrollView
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tvRegistration">
-
-        <LinearLayout
+        android:layout_below="@+id/tvRegistration"
+        android:layout_margin="20dp"
+        app:cardElevation="5dp"
+        app:cardCornerRadius="15dp">
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="16dp"
-            android:orientation="vertical">
-            <TextView
-                android:id="@+id/tvEmail"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvRegistration">
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:text="Email"
-                android:textColor="@color/blueBackground" />
+                android:layout_height="match_parent"
+                android:padding="16dp"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/tvEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:text="Email"
+                    android:textColor="@color/blueBackground" />
 
-            <EditText
-                android:id="@+id/etUserEmail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Enter your Email"
-                android:inputType="textEmailAddress" />
+                <EditText
+                    android:id="@+id/etUserEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Enter your Email"
+                    android:inputType="textEmailAddress" />
 
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="20sp" />
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="20sp" />
 
-            <EditText
-                android:id="@+id/etUserPassword"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Type Password"
-                android:inputType="textPassword" />
+                <EditText
+                    android:id="@+id/etUserPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Type Password"
+                    android:inputType="textPassword" />
 
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="20sp" />
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="20sp" />
 
-            <EditText
-                android:id="@+id/etUserRePassword"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Retype Password"
-                android:inputType="textPassword" />
+                <EditText
+                    android:id="@+id/etUserRePassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Retype Password"
+                    android:inputType="textPassword" />
 
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="20sp" />
-            <EditText
-                android:id="@+id/etUserName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Enter your Name"/>
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="20sp" />
+                <EditText
+                    android:id="@+id/etUserName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Enter your Name"/>
 
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="20sp" />
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="20sp" />
 
-            <EditText
-                android:id="@+id/etPhoneNumber"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Enter your Phone Number"
-                android:inputType="phone" />
+                <EditText
+                    android:id="@+id/etPhoneNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Enter your Phone Number"
+                    android:inputType="phone" />
 
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="20sp" />
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="20sp" />
 
-            <EditText
-                android:id="@+id/etGroupName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Create your Group Name"/>
+                <EditText
+                    android:id="@+id/etGroupName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:hint="Create your Group Name"/>
 
 
-            <Button
-                android:id="@+id/btnSave"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/colorPurpleButton"
-                android:text="Save"
-                android:textColor="@color/colorWhite">
+                <Button
+                    android:id="@+id/btnSave"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorPurpleButton"
+                    android:text="Save"
+                    android:textColor="@color/colorWhite">
 
-            </Button>
+                </Button>
 
-        </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
-
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+    </androidx.cardview.widget.CardView>
 
 
 </RelativeLayout>

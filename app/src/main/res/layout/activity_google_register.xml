@@ -20,7 +20,8 @@
             android:id="@+id/tvRLogout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="LOGOUT"
+            android:text="@string/logout"
+            android:textColor="@color/colorWhite"
             android:textSize="12sp"
             android:paddingTop="10dp"
             android:paddingRight="8dp"
@@ -47,7 +48,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/montserrat"
         android:paddingLeft="8dp"
-        android:text="Registration"
+        android:text="@string/registration"
         android:layout_centerInParent="true"
         android:textColor="@color/blueBackground"
         android:layout_below="@+id/lottieAnimationView"
@@ -77,7 +78,7 @@
                 android:id="@+id/etUserEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Enter your Email"
+                android:hint="@string/enterEmail"
                 android:inputType="textEmailAddress" />
 
             <Space
@@ -87,7 +88,7 @@
                 android:id="@+id/etUserName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Enter your Name"/>
+                android:hint="@string/enterName" />
 
             <Space
                 android:layout_width="match_parent"
@@ -97,7 +98,7 @@
                 android:id="@+id/etPhoneNumber"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Enter your Phone Number"
+                android:hint="@string/enterPhone"
                 android:inputType="phone" />
 
             <Space
@@ -108,22 +109,20 @@
                 android:id="@+id/etGroupName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Create your Group Name"/>
+                android:hint="@string/enterGroup"/>
 
 
             <Button
                 android:id="@+id/btnSave"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
                 android:background="@color/colorPurpleButton"
-                android:text="Save"
+                android:text="@string/save"
                 android:textColor="@color/colorWhite">
 
             </Button>
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
-
-
-
 </RelativeLayout>

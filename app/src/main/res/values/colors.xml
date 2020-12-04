@@ -9,9 +9,12 @@
     <color name="colorPurpleButton">#441F85</color>
     <color name="colorPurpleText">#6C33D1</color>
     <color name="colorPurpleBackground">#C8B2EF</color>
+    <color name="colorPurpleBackground2">#E2D1FA</color>
     <color name="colorPurpleComplement1">#F2EE9D</color>
     <color name="colorPurpleComplement2">#A8A32C</color>
     <color name="blueBackground">#263238</color>
     <color name="fab_color">#FF00FF</color>
+    <color name="semiClear">#8B4704BF</color>
+    <color name="colorLightGray">#DCDCDC</color>
 
 </resources>

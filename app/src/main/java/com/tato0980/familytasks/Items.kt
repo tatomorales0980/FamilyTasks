@@ -27,11 +27,14 @@ import com.tato0980.familytasks.CommonUtils.ItemModel
 import com.tato0980.familytasks.CommonUtils.UserModel
 import kotlinx.android.synthetic.main.activity_custom_recycle_items.view.*
 import kotlinx.android.synthetic.main.activity_items.*
+import kotlinx.android.synthetic.main.activity_register.view.*
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
 import java.util.*
 import kotlin.collections.HashMap
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
 
 class Items : AppCompatActivity() {
 
@@ -43,6 +46,7 @@ class Items : AppCompatActivity() {
     lateinit var itemDescription : EditText
     lateinit var myEmail : String
     lateinit var myGroupName : String
+    lateinit var currentGroup : String
     lateinit var imageLocation: String
     var imageUri : Uri? = null
 
@@ -55,12 +59,11 @@ class Items : AppCompatActivity() {
 //      adjust layout when soft keyboard appears
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE or WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
 
-//      Bringing data from RecycleView (item name)
+//      Bringing data from RecycleView (item name) if needs to be EDITED
         var item_id = intent.getStringExtra("item_name")
+        var group_id = intent.getStringExtra("group")
         myItemID = item_id.toString()
-
-
-
+        myGroupName = group_id.toString()
 
         btnsave = findViewById<Button>(R.id.btnSaveItem)
         btnBack = findViewById<ImageView>(R.id.imageViewBack)
@@ -90,13 +93,15 @@ class Items : AppCompatActivity() {
         }
 
         getUserData()
-//        Toast.makeText(this, "NOMBRE DEL GRUPO $myGroupName", Toast.LENGTH_SHORT).show()
         if (myItemID.isNotEmpty()) {
             btnsave.setText("Update")
             bringItemData()
         }
 
         btnBack.setOnClickListener(View.OnClickListener {
+            startActivity(Intent(this,RecycleView::class.java).apply {
+//                putExtra("display_editText", "no")
+            })
             finish()
         })
 
@@ -110,9 +115,7 @@ class Items : AppCompatActivity() {
     }
 
     fun bringItemData(){
-
-       var newGroup = "GMAIL Group"
-        db.collection(newGroup).whereEqualTo("id", myItemID)
+        db.collection(myGroupName).whereEqualTo("id", myItemID)
             .get()
             .addOnSuccessListener {
 
@@ -135,7 +138,6 @@ class Items : AppCompatActivity() {
     private fun getUserData() {
          db.collection("Users").whereEqualTo("email", myEmail).get()
              .addOnSuccessListener {
-
                  var user = it.toObjects(UserModel::class.java)
 
                  for (i in 0..user.size-1) {
@@ -191,8 +193,11 @@ class Items : AppCompatActivity() {
         if (myItemID.isEmpty()){
             rString = getRandomString(10)
             imageLocation = image
+
         }else {
             rString = myItemID
+//          Line addes 12/02/20 updating Item
+            imageLocation = image
         }
 
         var data = HashMap<String, String> ()
@@ -216,6 +221,10 @@ class Items : AppCompatActivity() {
                 Toast.makeText(this, "Something went wrong", Toast.LENGTH_SHORT).show()
                 progressDialog.dismiss()
             }
+
+        EventBus.getDefault().post("ItemAddedtoList")
+
+        finish()
     }
 
 
@@ -248,7 +257,6 @@ class Items : AppCompatActivity() {
         } else if (itemDescription.text.toString().isEmpty() ) {
             itemDescription.error = "Please Enter Description"
         } else {
-            Toast.makeText(this, "Saving Data1", Toast.LENGTH_SHORT).show()
             uploadImageToFirebase()
         }
     }

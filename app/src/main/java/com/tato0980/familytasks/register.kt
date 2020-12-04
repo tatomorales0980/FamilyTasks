@@ -63,6 +63,11 @@ class register : AppCompatActivity() {
         newphone = findViewById(R.id.etPhoneNumber)
         newgroup = findViewById(R.id.etGroupName)
 
+
+        ivBackRegister.setOnClickListener(View.OnClickListener {
+            finish()
+        })
+
         btnlogout.setOnClickListener {
             FirebaseAuth.getInstance().signOut()
             var currentUser = FirebaseAuth.getInstance().currentUser
@@ -130,6 +135,8 @@ class register : AppCompatActivity() {
             .document(FirebaseAuth.getInstance().currentUser!!.uid.toString())
             .set(data)
             .addOnSuccessListener {
+
+
                 progressDialog.dismiss()
                 Toast.makeText(this, "Successfully Loggedin", Toast.LENGTH_SHORT).show()
                 progressDialog.dismiss()

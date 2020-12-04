@@ -102,7 +102,7 @@ class MainActivity : AppCompatActivity() {
         FirebaseAuth.getInstance().signInWithEmailAndPassword(myemail, mypass).addOnCompleteListener {
 
             if (it.isSuccessful){
-                startActivity(Intent(this,HomeScreen::class.java))
+                startActivity(Intent(this, RecycleView_todo::class.java))
 //                I dont need this line here, needs to register
 //                progressDialog = ProgressDialog(this@MainActivity)
 //                progressDialog.setMessage("Saving Data on Server")
@@ -124,7 +124,7 @@ class MainActivity : AppCompatActivity() {
     // data = data bring from activity
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if(requestCode == RC_SIGN_IN){
+        if(requestCode == RC_SIGN_IN ){
             // Get the Singin data
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
             // Decrypt data from variable account
@@ -193,13 +193,19 @@ class MainActivity : AppCompatActivity() {
                 var name = it.get("name") as String?
                 var phone = it.get("phone") as String?
                 var group = it.get("group") as String?
-                if (name != null || phone != null || group != null){
-                    startActivity(Intent(this,RecycleView_todo::class.java))
-                } else {
-                    startActivity(Intent(this,register::class.java).apply {
-                        putExtra("display_editText","no")
-                    })
-                }
+
+                    if (name != null || phone != null || group != null ) {
+
+                       if ( name!!.isNotEmpty() || phone!!.isNotEmpty() || group!!.isNotEmpty()) {
+                           startActivity(Intent(this, RecycleView_todo::class.java))
+                       }
+
+                    } else {
+                        startActivity(Intent(this, register::class.java).apply {
+                            putExtra("display_editText", "no")
+                        })
+                    }
+
             }
 //          *****************************
         }

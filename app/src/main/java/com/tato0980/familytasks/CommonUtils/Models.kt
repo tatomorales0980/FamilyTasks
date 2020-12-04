@@ -11,7 +11,7 @@ class ItemModel(val email : String, val name : String, val description : String,
     constructor() : this(  "","","","","", "")
 }
 
-class ItemListModel(val email : String, val name : String, val description : String, val qty : String, val image : String, val id : String, val status : String)
+class ItemListModel(val email : String, val name : String, val group : String, val description : String, val qty : String, val image : String, val id : String, val status : String)
 {
-    constructor() : this(  "","","","","", "","")
+    constructor() : this(  "","","","","", "","","")
 }

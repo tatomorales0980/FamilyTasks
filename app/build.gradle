@@ -57,6 +57,10 @@ dependencies {
     implementation 'com.google.firebase:firebase-config:17.0.0'
 
 
+    //EventBus
+    implementation 'org.greenrobot:eventbus:3.2.0'
+
+
     //Google Signin
     implementation 'com.google.android.gms:play-services-auth:16.0.1'
 

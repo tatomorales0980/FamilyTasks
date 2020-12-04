@@ -10,37 +10,38 @@
     <androidx.cardview.widget.CardView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="3dp"
+        android:layout_marginTop="5dp"
         app:cardElevation="15dp"
-        app:cardCornerRadius="5dp"
-        android:layout_marginStart="8dp"
+        app:cardCornerRadius="20dp"
+        android:layout_marginStart="14dp"
         tools:ignore="MissingConstraints">
 
         <ImageView
             android:id="@+id/ivItem"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
             android:scaleType="centerCrop"
             android:src="@drawable/orange_fruit">
-
         </ImageView>
     </androidx.cardview.widget.CardView>
+
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cvMain"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="45dp"
-        android:layout_marginEnd="25dp"
-        android:layout_marginBottom="8dp"
+        android:layout_height="120dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="12dp"
         app:cardElevation="2dp"
+        app:cardCornerRadius="20dp"
         tools:ignore="MissingConstraints">
 
         <LinearLayout
             android:id="@+id/llmain2"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorPurple"
+            android:layout_height="match_parent"
+            android:background="@drawable/gradient"
             android:orientation="vertical"
             android:padding="10dp">
 
@@ -48,22 +49,20 @@
                 android:id="@+id/tvItemName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="120dp"
                 android:text="todoName"
-                android:textSize="20sp"
-                android:textStyle="bold"
                 android:textColor="@color/white"
-                android:layout_marginStart="20dp">
-            </TextView>
+                android:textSize="28sp"
+                android:textStyle="bold"></TextView>
 
             <TextView
                 android:id="@+id/tvItemDescription"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="120dp"
                 android:text="todoDescription"
-                android:textSize="14sp"
                 android:textColor="@color/colorPurpleComplement1"
-                android:layout_marginStart="20dp">
-            </TextView>
+                android:textSize="18sp"></TextView>
 
         </LinearLayout>
 

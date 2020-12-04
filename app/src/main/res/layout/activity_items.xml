@@ -41,7 +41,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/montserrat"
             android:paddingLeft="16dp"
-            android:text="your item"
+            android:text="@string/titleItem"
             android:textColor="@color/colorWhite"
             android:textSize="40sp"
             android:textStyle="bold"></TextView>
@@ -96,7 +96,7 @@
                     android:id="@+id/etItemName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Item Name" />
+                    android:hint="@string/itemName" />
 
                 <Space
                     android:layout_width="match_parent"
@@ -106,7 +106,7 @@
                     android:id="@+id/etItemDescription"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Item Description" />
+                    android:hint="@string/itemDescription" />
 
 
 
@@ -149,7 +149,7 @@
                         android:layout_weight="3"
                         android:layout_height="60dp"
                         android:background="@color/colorPurpleButton"
-                        android:text="Save"
+                        android:text="@string/save"
                         android:textColor="@color/white"
                         android:textSize="20sp" />
 
@@ -165,7 +165,7 @@
                     android:background="@color/colorPurpleButton"
                     android:textColor="@color/white"
                     android:textSize="20dp"
-                    android:text="Delete">
+                    android:text="@string/delete">
                 </Button>
 
                 </LinearLayout>

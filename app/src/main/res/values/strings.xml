@@ -1,3 +1,21 @@
 <resources>
     <string name="app_name">Family Tasks</string>
+    <string name="itemListTitle">Item List</string>
+    <string name="search">Search</string>
+    <string name="registration">Registration</string>
+    <string name="logout">LOGOUT</string>
+    <string name="enterEmail">Enter your Email</string>
+    <string name="enterName">Enter your Name</string>
+    <string name="enterPhone">Enter your Phone Number</string>
+    <string name="enterGroup">Create your Group Name</string>
+    <string name="save">Save</string>
+    <string name="titleItem">Your New Item</string>
+    <string name="itemName">Item Name</string>
+    <string name="itemDescription">Item Description</string>
+    <string name="delete">DELETE</string>
+    <string name="password">Enter your Password - 8 Characters</string>
+    <string name="btmsingup">Secure Signup</string>
+    <string name="singGoogle">Sign In with Google</string>
+    <string name="newUser">New User? </string>
+    <string name="register">Register Here</string>
 </resources>

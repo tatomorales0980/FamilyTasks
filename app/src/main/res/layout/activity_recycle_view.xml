@@ -26,36 +26,62 @@
         android:layout_marginBottom="10dp"
         android:background="@color/colorPurpleButton"
         android:fontFamily="@font/montserrat"
-        android:text="ITEM LIST"
+        android:text="@string/itemListTitle"
         android:textAlignment="center"
         android:textColor="@color/colorPurpleText"
-        android:textSize="34dp"
+        android:textSize="40dp"
         android:textStyle="bold" />
 
-    <LinearLayout
+    <androidx.cardview.widget.CardView
         android:id="@+id/llSearch"
+        android:layout_below="@+id/tvTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="right"
-        android:paddingRight="8dp"
-        android:layout_below="@+id/tvTitle"
-        android:background="@color/colorPurpleBackground">
-
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="8dp"
+        app:cardBackgroundColor="@color/colorLightGray"
+        app:cardCornerRadius="10dp">
         <EditText
             android:id="@+id/etSearch"
-            android:layout_width="250dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableStart="@drawable/ic_search"
-            android:hint="Search">
+            android:hint="@string/search">
 
         </EditText>
-    </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+<!--    <LinearLayout-->
+<!--        android:id="@+id/llSearch"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:gravity="right"-->
+<!--        android:paddingRight="8dp"-->
+<!--        android:layout_below="@+id/tvTitle"-->
+<!--        android:background="@color/colorPurpleBackground">-->
+
+<!--        <EditText-->
+<!--            android:id="@+id/etSearch"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:drawableStart="@drawable/ic_search"-->
+<!--            android:hint="Search">-->
+
+<!--        </EditText>-->
+<!--    </LinearLayout>-->
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/llSearch"
-        android:background="@color/colorWhite">
+        android:background="@color/colorPurpleButton">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/listItems"
@@ -74,12 +100,11 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="32dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginRight="32dp"
+        android:layout_marginBottom="4dp"
         android:clickable="true"
         android:src="@drawable/ic_parent"
-        app:backgroundTint="@color/fab_color"
-        app:borderWidth="1dp"
-        app:elevation="6dp" />
-
-
+        app:backgroundTint="@color/colorPurple"
+        app:borderWidth="2dp"
+        app:elevation="6dp"/>
 </RelativeLayout>

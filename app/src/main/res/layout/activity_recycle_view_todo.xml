@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:lava="http://schemas.android.com/apk/res-auto"
     android:background="@color/colorPurpleButton"
     tools:context=".MainActivity">
 
@@ -16,32 +17,37 @@
         app:lottie_fileName="purple_background.json"
         app:lottie_loop="true" />
 
-    <ImageView
-        android:id="@+id/imageViewBack"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:paddingTop="20dp"
-        android:paddingLeft="8dp"
-        android:src="@drawable/ic_arrowback"
-        app:tint="@color/white" />
 
-    <TextView
+<!--    <TextView-->
+<!--        android:id="@+id/tvTitle"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_centerHorizontal="true"-->
+<!--        android:layout_marginStart="10dp"-->
+<!--        android:layout_marginTop="18dp"-->
+<!--        android:layout_marginEnd="10dp"-->
+<!--        android:layout_marginBottom="10dp"-->
+<!--        android:background="@color/colorPurpleButton"-->
+<!--        android:fontFamily="@font/montserrat"-->
+<!--        android:text="MY TO DO LIST"-->
+<!--        android:letterSpacing="0.1"-->
+<!--        android:textAlignment="center"-->
+<!--        android:textColor="@color/colorPurpleText"-->
+<!--        android:textSize="34dp"-->
+<!--        android:textStyle="bold" />-->
+
+    <ImageView
         android:id="@+id/tvTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="14dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
-        android:background="@color/colorPurpleButton"
-        android:fontFamily="@font/montserrat"
-        android:text="MY TO DO LIST"
-        android:letterSpacing="0.1"
-        android:textAlignment="center"
-        android:textColor="@color/colorPurpleText"
-        android:textSize="34dp"
-        android:textStyle="bold" />
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:adjustViewBounds="true"
+        android:cropToPadding="true"
+        android:scaleType="fitXY"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginBottom="8dp"
+        lava:srcCompat="@drawable/title_mytodo" />
 
     <TextView
         android:id="@+id/tvLogout"
@@ -87,7 +93,9 @@
         app:lavaParentSize="@dimen/fab_size"
         app:lavaTopIcon="@drawable/ic_addshoppingcart"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        lava:lavaBackgroundColor="@color/colorAccent"
+        app:lavaDrawShadow = "true"/>
 
 
 

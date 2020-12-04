@@ -1,35 +1,33 @@
 package com.tato0980.familytasks
 
 import android.app.ProgressDialog
-import android.content.ClipData
 import android.content.Intent
 import android.graphics.Color
-import android.graphics.Insets.add
-import android.icu.number.NumberFormatter.with
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import android.widget.*
 import android.widget.Toast.makeText
-import androidx.core.view.OneShotPreDrawListener.add
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.squareup.picasso.Picasso
 import com.tato0980.familytasks.CommonUtils.ItemModel
 import com.tato0980.familytasks.CommonUtils.UserModel
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import com.xwray.groupie.Item
-import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.google.android.material.snackbar.Snackbar
-import com.squareup.picasso.Picasso
-import io.reactivex.internal.util.BackpressureHelper.add
 import kotlinx.android.synthetic.main.activity_custom_recycle_items.*
 import kotlinx.android.synthetic.main.activity_custom_recycle_items.view.*
 import kotlinx.android.synthetic.main.activity_items.*
 import kotlinx.android.synthetic.main.activity_recycle_view.*
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+
 
 class RecycleView : AppCompatActivity() {
 
@@ -43,9 +41,8 @@ class RecycleView : AppCompatActivity() {
     lateinit var myList : RecyclerView
     lateinit var currentGroupName : String
     lateinit var llmain : LinearLayout
+    lateinit var etSearch: EditText
     private lateinit var progressDialog: ProgressDialog
-
-    var arrayItems = ArrayList<ItemModel>()
 
 
     var db = FirebaseFirestore.getInstance()
@@ -58,14 +55,17 @@ class RecycleView : AppCompatActivity() {
         tvTitle = findViewById<TextView>(R.id.tvTitle)
         myList = findViewById(R.id.listItems)
         ivBack = findViewById(R.id.imageViewBack)
+        etSearch = findViewById(R.id.etSearch)
 
         myEmail = FirebaseAuth.getInstance().currentUser!!.email.toString()
+
+
 
         val fab: View = findViewById(R.id.fabAddItem)
 
         fab.setOnClickListener { view ->
-            startActivity(Intent(this@RecycleView,Items::class.java).apply {
-                putExtra("item_name","")
+            startActivity(Intent(this@RecycleView, Items::class.java).apply {
+                putExtra("item_name", "")
             })
         }
         ivBack.setOnClickListener(View.OnClickListener {
@@ -74,8 +74,33 @@ class RecycleView : AppCompatActivity() {
 
         getUserData()
 
+        etSearch.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
+            override fun afterTextChanged(s: Editable) {
+                populateItems(currentGroupName,s.toString().toLowerCase())
+            }
+        })
+
     }
 
+
+    override fun onStart() {
+        super.onStart()
+        if (!EventBus.getDefault().isRegistered(this)) EventBus.getDefault().register(this)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        EventBus.getDefault().unregister(this)
+    }
+
+    @Subscribe
+    fun OnRefreshList(addItem: String?) {
+        if (addItem == "ItemAddedtoList") {
+            populateItems(currentGroupName,"")
+        }
+    }
 
     private fun getUserData() {
         db.collection("Users").whereEqualTo("email", myEmail).get()
@@ -86,27 +111,30 @@ class RecycleView : AppCompatActivity() {
                 for (i in 0..user.size-1) {
                     if (user.get(i) != null) {
                         currentGroupName = user.get(i).group
-                        populateItems(currentGroupName)
+                        populateItems(currentGroupName,"")
                     }
                 }
             }
 
     }
 
-    inner class groupieAdpt(characters: ArrayList<ItemModel>) : Item<GroupieViewHolder>() {
+    inner class groupieAdpt(var characters:  ItemModel ) : Item<GroupieViewHolder>() {
 
         override fun bind(viewHolder: GroupieViewHolder, position: Int) {
-            if (arrayItems.get(position).image.isNotEmpty()) {
-                Picasso.get().load(arrayItems.get(position).image).into(viewHolder.itemView.ivItem)
+            if (characters.image.isNotEmpty() && characters.image != "") {
+                Picasso.get().load(characters.image).into(viewHolder.itemView.ivItem)
             }
+//            else {
+//               viewHolder.itemView.ivItem.setImageDrawable(resources.getDrawable(R.drawable.orange_fruit))
+//            }
 
-            viewHolder.itemView.tvItemName.text = arrayItems.get(position).name
-            viewHolder.itemView.tvItemDescription.text = arrayItems.get(position).description
+            viewHolder.itemView.tvItemName.text = characters.name
+            viewHolder.itemView.tvItemDescription.text = characters.description
 
-            val item_name = arrayItems.get(position).name
-            val item_description = arrayItems.get(position).description
-            val item_id = arrayItems.get(position).id
-            val item_iamge = arrayItems.get(position).image
+            val item_name = characters.name
+            val item_description = characters.description
+            val item_id = characters.id
+            val item_iamge = characters.image
 
             var rowindex = position
             var painted = 0
@@ -118,27 +146,33 @@ class RecycleView : AppCompatActivity() {
                 if (rowindex == position && painted == 0) {
                     viewHolder.itemView.setBackgroundColor(Color.parseColor("#E8E8E8"))
                     painted = 1
-                    message = "Item ${arrayItems.get(position).name} Added to list"
+                    message = "Item ${characters.name} Added to list"
                     status = "1"
                 } else {
                     viewHolder.itemView.setBackgroundColor(Color.parseColor("#ffffff"))
                     painted = 0
-                    message = "Item ${arrayItems.get(position).name} Removed from list "
+                    message = "Item ${characters.name} Removed from list "
                     status = "0"
                 }
-                Snackbar.make(it, message, Snackbar.LENGTH_LONG)
-                    .setAction("Action", null)
-                    .show()
 
 //              Add items to TODO list
-                addtodolist(item_name, item_description, item_id, item_iamge, status)
+                addtodolist(
+                    item_name,
+                    item_description,
+                    item_id,
+                    item_iamge,
+                    currentGroupName,
+                    status,
+                    message,
+                    viewHolder.itemView.btnItemAdd
+                )
 
             }
 
             viewHolder.itemView.btnItemEdit.setOnClickListener() {
-//                Toast.makeText(this@RecycleView, "Name: ${arrayItems.get(position).id}", Toast.LENGTH_SHORT).show()
-                startActivity(Intent(this@RecycleView,Items::class.java).apply {
-                putExtra("item_name",arrayItems.get(position).id)
+                startActivity(Intent(this@RecycleView, Items::class.java).apply {
+                    putExtra("item_name", characters.id)
+                    putExtra("group",currentGroupName)
                 })
             }
         }
@@ -149,47 +183,58 @@ class RecycleView : AppCompatActivity() {
 
     }
 
-    fun populateItems(myGroup: String){
+    fun populateItems(myGroup: String, toLowerCase: String){
+        var adapter = GroupAdapter<GroupieViewHolder>()
+        adapter.clear()
+        myList.removeAllViews()
 
-        makeText(this, "-$myGroup-", Toast.LENGTH_SHORT).show()
-//        db.collection(myGroup).whereEqualTo("group", myGroup).get()
-//        db.collection(myGroup).whereEqualTo("group", "Test Group").get()
+
         currentGroupName = myGroup.toString()
-        db.collection("GMAIL Group").get()
+        db.collection(currentGroupName).orderBy("name")
+            .get()
             .addOnSuccessListener {
 
                 var item = it.toObjects(ItemModel::class.java)
 
                 for (i in 0..item.size-1) {
-                    if (item.get(i) != null) {
-                        itemId = item.get(i).id
-                        itemImageURl = item.get(i).image
-                        itemName = item.get(i).name
-                        itemDescription = item.get(i).description
-                        arrayItems.add(ItemModel(myEmail,itemName,itemDescription,"",itemImageURl,itemId))
-//                        Toast.makeText(this, "Item Name : $itemName", Toast.LENGTH_SHORT).show()
-                    }
-                }
-                // Creating Adapter to Recycle View
-                var adapter = GroupAdapter<GroupieViewHolder>()
+                    if (toLowerCase.isEmpty()) {
+                        adapter.add(groupieAdpt(item.get(i)))
+                    }else  {
 
-                for (i in 0..arrayItems.size-1) {
-                    adapter.add(groupieAdpt(arrayItems))
-                }
+                        val itemname: CharArray = item.get(i).name.toCharArray()
+                        val name: CharArray = toLowerCase.toCharArray()
+
+                        while (itemname[i] == name[i]) {
+                            adapter.add(groupieAdpt(item.get(i)))
+                        }
+
+
+                }}
+
+
 
 //        myList.layoutManager = StaggeredGridLayoutManager(this, 2)
 //        myList.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,false)
                 myList.layoutManager = GridLayoutManager(this, 2)
 
                 myList.setAdapter(adapter)
+                myList.setHasFixedSize(true)
             }
 
     }
 
-
-//    Add Items to TODO list on Fire Base
-    fun addtodolist(name: String, description: String, id: String, image: String, status: String){
-        makeText(this, "addtolist $name, $status", Toast.LENGTH_SHORT).show()
+    //    Add Items to TODO list on Fire Base
+    fun addtodolist(
+        name: String,
+        description: String,
+        id: String,
+        image: String,
+        group: String,
+        status: String,
+        message: String,
+        btnItemAdd: View
+    ){
+//        makeText(this, "addtolist $name, $status", Toast.LENGTH_SHORT).show()
         progressDialog = ProgressDialog(this@RecycleView)
         progressDialog.setMessage("Saving Data on Server")
         progressDialog.setCancelable(false)
@@ -199,6 +244,7 @@ class RecycleView : AppCompatActivity() {
         data.put("email", FirebaseAuth.getInstance().currentUser!!.email.toString())
         data.put("id", id)
         data.put("name", name)
+        data.put("group", group)
         data.put("description", description)
         data.put("image", image)
         data.put("status", status)
@@ -209,8 +255,15 @@ class RecycleView : AppCompatActivity() {
             .document(id)
             .set(data)
             .addOnSuccessListener {
+
+                EventBus.getDefault().post("ItemAdded")
+
                 progressDialog.dismiss()
-                Toast.makeText(this, "Successfully Loggedin", Toast.LENGTH_SHORT).show()
+
+                Snackbar.make(btnItemAdd, message, Snackbar.LENGTH_LONG)
+                    .setAction("Action", null)
+                    .show()
+
                 progressDialog.dismiss()
             }
             .addOnFailureListener {
