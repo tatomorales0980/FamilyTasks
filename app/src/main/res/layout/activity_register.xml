@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPurpleBackground"
+    android:background="@drawable/gradient"
     tools:context=".register">
 
 
@@ -14,8 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:layout_gravity="center"
-        android:orientation="vertical"
-        android:background="@color/colorPurpleButton">
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/tvRLogout"
@@ -46,7 +45,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"
         app:lottie_autoPlay="true"
-        app:lottie_fileName="working_together.json"
+        app:lottie_fileName="blue_check.json"
         app:lottie_loop="false" />
     <TextView
         android:id="@+id/tvRegistration"
@@ -56,10 +55,11 @@
         android:paddingLeft="8dp"
         android:text="Registration"
         android:layout_centerInParent="true"
-        android:textColor="@color/blueBackground"
+        android:textColor="@color/white"
         android:layout_below="@+id/lottieAnimationView"
-        android:textSize="18sp">
+        android:textSize="32sp">
     </TextView>
+
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -72,12 +72,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/tvRegistration">
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:padding="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
                 android:orientation="vertical">
+
                 <TextView
                     android:id="@+id/tvEmail"
                     android:layout_width="match_parent"
@@ -91,6 +93,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Enter your Email"
+                    android:drawableStart="@drawable/email"
+                    android:drawablePadding="20dp"
+                    android:ems="10"
+                    android:backgroundTint="@color/white"
                     android:inputType="textEmailAddress" />
 
                 <Space
@@ -101,6 +107,10 @@
                     android:id="@+id/etUserPassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/lock"
+                    android:drawablePadding="20dp"
+                    android:ems="10"
+                    android:backgroundTint="@color/white"
                     android:hint="Type Password"
                     android:inputType="textPassword" />
 
@@ -112,6 +122,10 @@
                     android:id="@+id/etUserRePassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/lock"
+                    android:drawablePadding="20dp"
+                    android:ems="10"
+                    android:backgroundTint="@color/white"
                     android:hint="Retype Password"
                     android:inputType="textPassword" />
 
@@ -122,6 +136,11 @@
                     android:id="@+id/etUserName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_person"
+                    android:drawableTint="@color/colorPurple"
+                    android:drawablePadding="20dp"
+                    android:ems="10"
+                    android:backgroundTint="@color/white"
                     android:hint="Enter your Name"/>
 
                 <Space
@@ -133,6 +152,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Enter your Phone Number"
+                    android:drawableStart="@drawable/ic_phone"
+                    android:drawableTint="@color/colorPurple"
+                    android:drawablePadding="20dp"
+                    android:ems="10"
+                    android:backgroundTint="@color/white"
                     android:inputType="phone" />
 
                 <Space
@@ -144,6 +168,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="20dp"
+                    android:drawableStart="@drawable/group"
+                    android:drawableTint="@color/colorPurple"
+                    android:drawablePadding="20dp"
+                    android:ems="10"
+                    android:backgroundTint="@color/white"
                     android:hint="Create your Group Name"/>
 
 
@@ -151,6 +180,7 @@
                     android:id="@+id/btnSave"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
                     android:background="@color/colorPurpleButton"
                     android:text="Save"
                     android:textColor="@color/colorWhite">

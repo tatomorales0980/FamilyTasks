@@ -13,7 +13,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".CustomRecycleTodo"></activity>
+        <activity android:name=".InviteOthers"></activity>
+        <activity android:name=".UserData" />
+        <activity android:name=".CustomRecycleTodo" />
         <activity android:name=".RecycleView_todo" />
         <activity android:name=".CustomRecycleItems" />
         <activity android:name=".CustomRecycleContacts" />

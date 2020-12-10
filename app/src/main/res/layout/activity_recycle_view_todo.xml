@@ -69,7 +69,7 @@
         android:background="@color/colorPurpleButton">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/listItems"
+            android:id="@+id/listItemsToDo"
             android:layout_below="@+id/tvTitle"
             android:layout_margin="10dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"

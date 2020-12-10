@@ -72,7 +72,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_gravity="center_horizontal"
                 app:lottie_autoPlay="true"
-                app:lottie_fileName="working_together.json"
+                app:lottie_fileName="shopping_checlist.json"
                 app:lottie_loop="true" />
 
             <EditText

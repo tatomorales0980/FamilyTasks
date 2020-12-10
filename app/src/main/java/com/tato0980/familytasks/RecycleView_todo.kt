@@ -2,12 +2,18 @@ package com.tato0980.familytasks
 
 import android.app.ProgressDialog
 import android.content.Intent
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.bitvale.lavafab.Child
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -30,10 +36,14 @@ import kotlinx.android.synthetic.main.activity_custom_recycle_items.view.tvItemN
 import kotlinx.android.synthetic.main.activity_custom_recycle_todo.*
 import kotlinx.android.synthetic.main.activity_custom_recycle_todo.view.*
 import kotlinx.android.synthetic.main.activity_home_screen.*
+import kotlinx.android.synthetic.main.activity_home_screen.lava_fab_bottom_right
 import kotlinx.android.synthetic.main.activity_recycle_view.*
+import kotlinx.android.synthetic.main.activity_recycle_view.listItems
+import kotlinx.android.synthetic.main.activity_recycle_view_todo.*
 import kotlinx.android.synthetic.main.activity_register.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
+import kotlin.properties.Delegates
 
 
 class RecycleView_todo : AppCompatActivity() {
@@ -48,6 +58,9 @@ class RecycleView_todo : AppCompatActivity() {
     lateinit var itemImageURl: String
     lateinit var itemStatus: String
     lateinit var myList : RecyclerView
+    lateinit var documentId: String
+    private lateinit var deleteIcon: Drawable
+    private var swipeBackground: ColorDrawable = ColorDrawable(Color.parseColor("#A8A32C"))
     private lateinit var progressDialog: ProgressDialog
     var adapter = GroupAdapter<GroupieViewHolder>()
     var googleSignInClient : GoogleSignInClient? = null
@@ -60,7 +73,7 @@ class RecycleView_todo : AppCompatActivity() {
         setContentView(R.layout.activity_recycle_view_todo)
 
         tvLogout = findViewById(R.id.tvLogout)
-        myList = findViewById(R.id.listItems)
+        myList = findViewById(R.id.listItemsToDo)
 
         myEmail = FirebaseAuth.getInstance().currentUser!!.email.toString()
 
@@ -100,12 +113,69 @@ class RecycleView_todo : AppCompatActivity() {
         }
 
 
-
+        deleteIcon = ContextCompat.getDrawable(this, R.drawable.ic_delete)!!
         currentGroupName = "todo_test"
 
         setupViews()
 
         getListData()
+
+//      Swipe to delete 120820
+        val itemTouchHelperCallback = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT){
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, position: Int) {
+                var rowindex = viewHolder.adapterPosition
+                updateStatus(documentId, rowindex)
+            }
+
+            override fun onChildDraw(
+                c: Canvas,
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                dX: Float,
+                dY: Float,
+                actionState: Int,
+                isCurrentlyActive: Boolean
+            ) {
+                val itemView = viewHolder.itemView
+
+                val iconMargin = (itemView.height - deleteIcon.intrinsicHeight)/2
+
+                if (dX > 0){
+                    swipeBackground.setBounds(itemView.left, itemView.top, dX.toInt(), itemView.bottom)
+                    deleteIcon.setBounds(itemView.left + iconMargin, itemView.top + iconMargin,
+                        itemView.left + iconMargin + deleteIcon.intrinsicWidth, itemView.bottom - iconMargin)
+                }else{
+                    swipeBackground.setBounds(itemView.right + dX.toInt(), itemView.top, itemView.right, itemView.bottom)
+                    deleteIcon.setBounds(itemView.right - iconMargin - deleteIcon.intrinsicWidth, itemView.top + iconMargin,
+                        itemView.right - iconMargin, itemView.bottom - iconMargin)
+                }
+
+                swipeBackground.draw(c)
+                deleteIcon.draw(c)
+
+                super.onChildDraw(
+                    c,
+                    recyclerView,
+                    viewHolder,
+                    dX,
+                    dY,
+                    actionState,
+                    isCurrentlyActive
+                )
+            }
+
+        }
+        val itemTouchHelper = ItemTouchHelper(itemTouchHelperCallback)
+        itemTouchHelper.attachToRecyclerView(myList)
+
     }
 
     override fun onStart() {
@@ -137,39 +207,43 @@ class RecycleView_todo : AppCompatActivity() {
             viewHolder.itemView.tvItemDescription.text = arrayItems.get(position).description
 
 //          CHECK THIS, to many variables
-            var rowindex = position
-            var painted = 0
-            var status = ""
-            var documentId = arrayItems.get(position).id
-            viewHolder.itemView.setOnClickListener() {
-//                    viewHolder.itemView.llmain2.setBackgroundColor(Color.parseColor("#A8A32C"))
-                    painted = 1
-                    status = "0"
-                    var message = arrayItems.get(position).name
-                    Snackbar.make(it, message, Snackbar.LENGTH_SHORT)
-                        .setAction("Action", null)
-                        .show()
-                        updateStatus(status, documentId, position)
-            }
+//            var rowindex = position
+//            var painted = 0
+//            var status = ""
+            documentId = arrayItems.get(position).id
+
+
+
+//            viewHolder.itemView.setOnClickListener() {
+////                    viewHolder.itemView.llmain2.setBackgroundColor(Color.parseColor("#A8A32C"))
+//                    painted = 1
+//                    status = "0"
+//                    var message = arrayItems.get(position).name
+//                    Snackbar.make(it, message, Snackbar.LENGTH_SHORT)
+//                        .setAction("Action", null)
+//                        .show()
+//                        updateStatus(documentId, position)
+//            }
         }
         override fun getLayout(): Int {
             return R.layout.activity_custom_recycle_todo
         }
     }
 
-    fun updateStatus(status: String, documentid: String, position: Int){
+    fun updateStatus(documentid: String, position: Int){
 
-        db.collection(currentGroupName).document(documentid)
-//            .update("status" , status)
-            .delete()
-            .addOnSuccessListener{
-        }
+        Toast.makeText(this, "Document ID: $documentid / Position $position", Toast.LENGTH_SHORT).show()
+//        db.collection(currentGroupName).document(documentid)
+////            .update("status" , status)
+//            .delete()
+//            .addOnSuccessListener{
+//        }
 
 
 //      DELETE PROCESS  ********** 111820  *********
-        adapter.removeGroupAtAdapterPosition(position)
-        arrayItems.removeAt(position)
-        adapter!!.notifyDataSetChanged()
+//        adapter.removeGroupAtAdapterPosition(position)
+//        arrayItems.removeAt(position)
+//        adapter!!.notifyDataSetChanged()
     }
 
 
@@ -253,7 +327,7 @@ class RecycleView_todo : AppCompatActivity() {
     }
 
     private fun register() {
-        startActivity(Intent(this, register::class.java).apply {
+        startActivity(Intent(this, UserData::class.java).apply {
 //            putExtra("display_editText","no")
         })
     }
