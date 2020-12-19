@@ -1,8 +1,8 @@
 package com.tato0980.familytasks.CommonUtils
 
-class UserModel(val email : String,val group : String, val name : String, val phone : String)
+class UserModel(val email : String,val group : String, val name : String, val phone : String, val admin : String)
 {
-    constructor() : this(  "","","","")
+    constructor() : this(  "","","","", "")
 }
 
 

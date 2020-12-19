@@ -2,18 +2,21 @@ package com.tato0980.familytasks
 
 import android.app.AlertDialog
 import android.app.ProgressDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.view.View.OnFocusChangeListener
 import android.view.WindowManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.cardview.widget.CardView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.tato0980.familytasks.CommonUtils.ItemListModel
+import com.tato0980.familytasks.CommonUtils.UserModel
 import kotlinx.android.synthetic.main.activity_register.*
 
 
@@ -28,7 +31,10 @@ class register : AppCompatActivity() {
     lateinit var newphone : EditText
     lateinit var newgroup : EditText
     lateinit var errormsg : String
-
+    lateinit var joinmyGroup : String
+    lateinit var findGroup : String
+    lateinit var userAdmin : String
+    lateinit var rString : String
 
 
     lateinit var btnlogout : TextView
@@ -62,11 +68,23 @@ class register : AppCompatActivity() {
         newname = findViewById(R.id.etUserName)
         newphone = findViewById(R.id.etPhoneNumber)
         newgroup = findViewById(R.id.etGroupName)
+        userAdmin = "Y"
+        findGroup = "no"
+        rString = ""
+
+//        btnsave.isEnabled = false
 
 
         ivBackRegister.setOnClickListener(View.OnClickListener {
             finish()
         })
+//        newgroup.setOnFocusChangeListener(OnFocusChangeListener { v, hasFocus ->
+//            if (!hasFocus) {
+//                checkGroup()
+//                btnsave.isEnabled = true
+//            }
+//        })
+
 
         btnlogout.setOnClickListener {
             FirebaseAuth.getInstance().signOut()
@@ -77,6 +95,7 @@ class register : AppCompatActivity() {
             }
         }
         btnsave.setOnClickListener {
+            checkGroup()
             if (show != "no"){
                 if (newpass.text.toString() == newrepass.text.toString()) {
                     if (newemail.text.toString().isNotEmpty() && newpass.text.toString()
@@ -95,6 +114,36 @@ class register : AppCompatActivity() {
             }
 
         }
+    }
+
+    fun checkGroup() {
+        db.collection("Users").whereEqualTo("group", newgroup.getText().toString())
+            .get()
+            .addOnSuccessListener {
+                var user = it.toObjects(UserModel::class.java)
+
+                loop@ for (i in 0..user.size - 1) {
+                    if (user.get(i) != null) {
+                        var group = user.get(i).group
+                        if (group == newgroup.getText().toString()) {
+                            findGroup = "yes"
+                            userAdmin = "N"
+                            rString=""
+                            Toast.makeText(this, "You have successfully joined +${newgroup.getText().toString()}" , Toast.LENGTH_SHORT).show()
+//                            dialogAlert()
+//                            return@addOnSuccessListener
+                            break@loop
+                        }else {
+                            findGroup = "no"
+                            userAdmin = "Y"
+                            rString = getRandomString(3)
+                        }
+                    }
+                }
+            }
+            if (findGroup == "no"){
+                rString = getRandomString(3)
+            }
     }
 
     fun checkField() {
@@ -128,7 +177,8 @@ class register : AppCompatActivity() {
         data.put("email", FirebaseAuth.getInstance().currentUser!!.email.toString())
         data.put("name", newname.text.toString())
         data.put("phone", newphone.text.toString())
-        data.put("group", newgroup.text.toString())
+        data.put("group", rString+newgroup.text.toString())
+        data.put("admin", userAdmin)
 
 
         db.collection("Users")
@@ -138,12 +188,12 @@ class register : AppCompatActivity() {
 
 
                 progressDialog.dismiss()
-                Toast.makeText(this, "Successfully Loggedin", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Successfully user created ${newname.text.toString()}", Toast.LENGTH_SHORT).show()
                 progressDialog.dismiss()
                 moveNextPage()
             }
             .addOnFailureListener {
-                Toast.makeText(this, "Something went wrong", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Something went wrong saving data", Toast.LENGTH_SHORT).show()
                 progressDialog.dismiss()
             }
     }
@@ -165,6 +215,41 @@ class register : AppCompatActivity() {
         builder.setPositiveButton("OK", null)
         val dialog: AlertDialog = builder.create()
         dialog.show()
+    }
+
+    private fun dialogAlert() {
+            // build alert dialog
+            val dialogBuilder = AlertDialog.Builder(this)
+
+            // set message of alert dialog
+            dialogBuilder.setMessage(getString(R.string.messageAlert) + " " +newgroup.getText().toString())
+                // if the dialog is cancelable
+                .setCancelable(false)
+                // positive button text and action
+                .setPositiveButton("Ok", DialogInterface.OnClickListener {
+//                        dialog, id -> finish()
+                        dialog, id ->
+                    joinmyGroup = "yes"
+                })
+                // negative button text and action
+//                .setNegativeButton("Cancel", DialogInterface.OnClickListener { dialog, id ->
+//                    dialog.cancel()
+//                })
+
+            // create dialog box
+            val alert = dialogBuilder.create()
+            // set title for alert dialog box
+            alert.setTitle(getString(R.string.messageAlertTitle))
+            // show alert dialog
+            alert.show()
+    }
+
+
+    fun getRandomString(length: Int) : String {
+        val allowedChars = ('A'..'Z') + ('a'..'z') + ('0'..'9')
+        return (1..length)
+            .map { allowedChars.random() }
+            .joinToString("")
     }
 
 }

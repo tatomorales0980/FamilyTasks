@@ -305,19 +305,10 @@ class RecycleView_todo : AppCompatActivity() {
     }
 
     private fun invite()  {
-        val sendIntent: Intent = Intent().apply {
-            action = Intent.ACTION_SEND
-            putExtra(
-                Intent.EXTRA_TEXT,
-                "Try this Awesome App 'FamilyTask - Task Creator and Reminder' which helps you to keep track on your Tasks. " +
+        startActivity(Intent(this, InviteOthers::class.java).apply {
+            putExtra("groupName", myGroup)
+        })
 
-                        "Download and Install https://play.google.com/store/apps/details?id=com.productionapp.aatmanirbharcamscanner and use my Group Name to Join me : ${myGroup}."
-            )
-            type = "text/plain"
-        }
-
-        val shareIntent = Intent.createChooser(sendIntent, null)
-        startActivity(shareIntent)
     }
 
     private fun addItem() {

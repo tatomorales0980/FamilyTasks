@@ -100,7 +100,6 @@ class Items : AppCompatActivity() {
 
         btnBack.setOnClickListener(View.OnClickListener {
             startActivity(Intent(this,RecycleView::class.java).apply {
-//                putExtra("display_editText", "no")
             })
             finish()
         })
@@ -178,6 +177,7 @@ class Items : AppCompatActivity() {
             "ItemImage-$n",
             null
         )
+
         return Uri.parse(path)
     }
 
@@ -239,6 +239,7 @@ class Items : AppCompatActivity() {
             ref.putFile(imageUri!!)
                 .addOnSuccessListener {
                     Log.d("SocietyLogs", "Image uploaded")
+                    Log.d("myImage", imageUri!!.toString())
                     ref.downloadUrl.addOnSuccessListener {
                         it.toString()
                         insertDatainFirebase(it.toString())

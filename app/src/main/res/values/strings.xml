@@ -16,6 +16,11 @@
     <string name="password">Enter your Password - 8 Characters</string>
     <string name="btmsingup">Secure Signup</string>
     <string name="singGoogle">Sign In with Google</string>
-    <string name="newUser">New User? </string>
+    <string name="newUser">New User? -</string>
     <string name="register">Register Here</string>
+    <string name="userEmail">User email</string>
+    <string name="userName">User name</string>
+    <string name="userPhone">User phone</string>
+    <string name="messageAlert">You have successfully joined</string>
+    <string name="messageAlertTitle">Message</string>
 </resources>
